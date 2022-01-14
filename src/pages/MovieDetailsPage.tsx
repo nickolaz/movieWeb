@@ -1,5 +1,5 @@
 import { Box, makeStyles, Typography } from "@material-ui/core";
-import { Grid } from "@mui/material";
+import { CircularProgress, Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { detailMovies } from "../api/moviesApi";
@@ -29,52 +29,63 @@ const MovieDetailsPage = ( ) => {
 
     return (
         <Box className={classes.container} >
-            <Typography variant="h1" className={classes.title}>
-                Movie Details
-            </Typography>
-            <img src={movie.Poster} alt="poster" className={classes.poster} />
-            <Typography variant="h2" className={classes.title}>
-                {movie.Title}
-            </Typography>
-            <Grid container direction="row" justifyContent="center" alignItems="center" 
-                spacing={{ xs: 2, md: 3 }} columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
-            >
-               <Grid item xs={12} sm={6} md={6} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Rating: {movie.imdbRating}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6} md={6} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Year: {movieDetail?.Year}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Genre: {movieDetail?.Genre}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Director: {movieDetail?.Director}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Writer: {movieDetail?.Writer}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Actors: {movieDetail?.Actors}
-                    </Typography>
-                </Grid>
-                <Grid item xs={12} sm={10} md={10} style={{ display: 'flex' , justifyContent: 'center'}}>
-                    <Typography variant="h3" className={classes.txt}>
-                        Plot: {movieDetail?.Plot}
-                    </Typography>
-                </Grid>
-            </Grid>
+            {
+                movieDetail ?
+                    <>
+                        <Typography variant="h1" className={classes.title}>
+                            Movie Details
+                        </Typography>
+                        <img src={movie.Poster} alt="poster" className={classes.poster} />
+                        <Typography variant="h2" className={classes.title}>
+                            {movie.Title}
+                        </Typography>
+                        <Grid container direction="row" justifyContent="center" alignItems="center" 
+                            spacing={{ xs: 2, md: 3 }} columns={{ xs: 12, sm: 12, md: 12, lg: 12 }}
+                        >
+                        <Grid item xs={12} sm={6} md={6} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Rating: {movie.imdbRating}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={6} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Year: {movieDetail?.Year}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Genre: {movieDetail?.Genre}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Director: {movieDetail?.Director}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Writer: {movieDetail?.Writer}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={12} md={12} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Actors: {movieDetail?.Actors}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={12} sm={10} md={10} style={{ display: 'flex' , justifyContent: 'center'}}>
+                                <Typography variant="h3" className={classes.txt}>
+                                    Plot: {movieDetail?.Plot}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                    </>
+                :  
+                    <Box sx={{ display: 'flex' , height: '100%'}}>
+                        <Box style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', }}>
+                            <CircularProgress style={{ width: '80px', height: '80px' }} />
+                        </Box>
+                    </Box>
+            }
         </Box>
     );
 };
@@ -86,6 +97,12 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex' , 
         flexDirection: 'column' , 
         alignItems: 'center' , 
+        marginTop: '2%' ,
+        marginBottom: '8%' ,
+        marginLeft: '5%' ,
+        marginRight: '5%' ,
+        borderRadius: '10px' ,
+        boxShadow: '5px 5px 5px 5px rgb(0 0 0 / 40%)'
     },
     title: {
         color: '#ff5000' , 
@@ -114,9 +131,3 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '16px',
     }
 }));
-// box-shadow: 5px 5px 5px 5px rgb(0 0 0 / 40%);
-//     margin-top: 8%;
-//     margin-left: 5%;
-//     margin-right: 5%;
-//     margin-bottom: 8%;
-//     border-radius: 10px;

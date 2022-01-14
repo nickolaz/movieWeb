@@ -16,6 +16,7 @@ const MoviesPage = () => {
     const [ searchType , setSearchType ] = useState<string>('Titulo');
     const [ movieList , setMovieList ] = useState<Movie[]>([]);
     const [ page , setPage ] = useState<number>(1);
+    const [ loading , setLoading ] = useState<boolean>(false);
 
     const isVisible = useOnScreen(ref);
 
@@ -32,9 +33,13 @@ const MoviesPage = () => {
 
   useEffect(() => {
     if ( isVisible ) {
+        setLoading(true);
         setPage(page + 1)
         MoviesList(searchValue , searchType , page + 1 ).then( (res : Movie[] | null) => {
-            if(res) setMovieList(prev => [...prev , ...res]);
+            if(res) {
+                setMovieList(prev => [...prev , ...res]);
+                setLoading(false);
+            }
         });
     }
   }, [ isVisible ]);
@@ -76,6 +81,10 @@ const MoviesPage = () => {
                     ))
                 }
                 </Grid>
+        }
+        {
+            loading && movieList.length !== 0 && <CircularProgress style={{ width: '80px', height: '80px' }} />
+
         }
         <Box ref={ref} component="div">.</Box>
     </Box>
